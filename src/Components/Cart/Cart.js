@@ -1,27 +1,12 @@
 import React from "react";
 import { Container } from "react-bootstrap";
-
-const cartElements = [
-  {
-    title: "Colors",
-    price: 100,
-    imageUrl: "https://prasadyash2411.github.io/ecom-website/img/Album%201.png",
-    quantity: 2,
-  },
-  {
-    title: "Black and white Colors",
-    price: 50,
-    imageUrl: "https://prasadyash2411.github.io/ecom-website/img/Album%202.png",
-    quantity: 3,
-  },
-  {
-    title: "Yellow and Black Colors",
-    price: 70,
-    imageUrl: "https://prasadyash2411.github.io/ecom-website/img/Album%203.png",
-    quantity: 1,
-  },
-];
+import { useContext } from "react";
+import CartContext from "../Store/CartContext";
 function Cart(props) {
+  const Cartctx = useContext(CartContext);
+  const removehandler = (id) => {
+    Cartctx.removeItem(id);
+  };
   return (
     <Container
       className=" border border-dark rounded-1 d-block position-fixed bg-danger-subtle"
@@ -29,10 +14,10 @@ function Cart(props) {
     >
       <button
         type="button"
-        className="btn btn-danger position-absolute end-0"
+        className="btn btn-danger position-absolute end-0 border-0"
         onClick={props.close}
       >
-        x
+        X
       </button>
       <h2 className="text-center border-dark border-bottom p-2 fw-bold">
         Cart
@@ -42,8 +27,9 @@ function Cart(props) {
         <span className="border-dark border-bottom mx-4">Price</span>
         <span className="border-dark border-bottom mx-4">Quantity</span>
       </section>
-      {cartElements.map((item) => (
-        <section key={item.imageUrl} className="row text-center   row-cols-4">
+      {/* {console.log(Cartctx.item.imageUrl)} */}
+      {Cartctx.item.map((item) => (
+        <section key={item.id} className="row text-center   row-cols-4">
           <span className="border-dark d-flex  border-bottom mx-4">
             <img
               className="w-75 h-75 d-inline-block  m-auto"
@@ -67,14 +53,19 @@ function Cart(props) {
               readOnly
             />
             <button
-              className="btn btn-danger d-inline-block w-75 m-auto mx-2"
+              className="btn btn-danger d-inline-block w-75 m-auto mx-2 p-0"
               style={{ height: "2rem" }}
+              onClick={removehandler.bind(null, item.id)}
             >
               Remove
             </button>
           </span>
         </section>
       ))}
+      <h2 className=" position-relative mt-2 border border-black rounded-4 text-center">
+        Total Cart Value{" "}
+        <span className="text-success"> ${Cartctx.totalAmount} </span>
+      </h2>
     </Container>
   );
 }
