@@ -10,7 +10,7 @@ function ProductsItem(props) {
   };
   const recievedProducts = props.product;
   return recievedProducts.map((item) => (
-    <div key={item.id} className="card text-center" style={{ width: "15rem" }}>
+    <div key={item.id}  className=" text-center d-grid gap-1 border border-black" style={{ width: "15rem"  }}>
       <h3>{item.title}</h3>
       <img className="card-img-top border-bottom" src={item.imageUrl} alt="" />
       <div className="card-body d-flex">

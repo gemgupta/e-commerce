@@ -3,6 +3,7 @@ import { Navbar, Nav, Container, Button } from "react-bootstrap";
 import Header from "./Header";
 import { useContext } from "react";
 import CartContext from "../Store/CartContext";
+import { NavLink } from "react-router-dom";
 function Nave(props) {
   const Cartctx = useContext(CartContext);
   let quantity = 0;
@@ -11,13 +12,13 @@ function Nave(props) {
   });
   return (
     <>  
-      <Navbar bg="dark" data-bs-theme="dark">
+      <Navbar bg="dark" className="d-flex position-sticky top-0" data-bs-theme="dark">
         <Container>
           <Navbar.Brand>E-Commerce</Navbar.Brand>
           <Nav className="text-light" style={{ width: "25%" }}>
-            <Nav.Link href="#home">Home</Nav.Link>
-            <Nav.Link href="#store">Store</Nav.Link>
-            <Nav.Link href="#about">About Us</Nav.Link>
+            <NavLink to="/">Home</NavLink>
+            <NavLink to="#">Store</NavLink>
+            <NavLink to="/about">About Us</NavLink>
           </Nav>
           <div>
             <Button
