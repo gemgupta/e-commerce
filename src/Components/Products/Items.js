@@ -29,7 +29,7 @@ const productsArr = [
 ];
 function Items() {
   return (
-    <div className="Container d-flex p-2 justify-content-between m-5  ">
+    <div className="Container d-lg-flex p-2 justify-content-evenly m-5 ">
       <ProductsItem product={productsArr} />
     </div>
   );
