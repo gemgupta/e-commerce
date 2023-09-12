@@ -30,7 +30,10 @@ function Nave(props) {
               Store
             </Link>
             <Link className="text-decoration-none text-light" to="/about">
-              About Us
+              About
+            </Link>
+            <Link className="text-decoration-none text-light" to="/contactUs">
+              Contact
             </Link>
           </Nav>
 

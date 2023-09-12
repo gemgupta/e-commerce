@@ -11,6 +11,7 @@ function Footer() {
       
       <li className="nav-item"><Link to="#" className="nav-link px-2 text-body-secondary">FAQs</Link></li>
       <li className="nav-item"><Link to="/about" className="nav-link px-2 text-body-secondary">About</Link></li>
+      <li className="nav-item"><Link to="/contactUs" className="nav-link px-2 text-body-secondary">Contact Us</Link></li>
     </ul>
     <p className="text-center text-body-secondary">© 2023 E-commerce Company, Inc</p>
   </footer>

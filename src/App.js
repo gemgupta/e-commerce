@@ -7,6 +7,7 @@ import Home from "./Components/Home/Home";
 import Footer from "./Components/Footer/Footer";
 import About from "./Components/About/About";
 import { Route, Routes } from "react-router-dom";
+import ContactUs from "./Components/Contact/ContactUs";
 
 function App() {
   const [showCart, setshowCart] = useState(false);
@@ -36,6 +37,7 @@ function App() {
         <Route exact path="/" element={<Items/>}/>
         <Route exact path="/about" element={<About/>}/>
         <Route exact path="/home" element={<Home/>}/>
+        <Route exact path="/contactUs" element={<ContactUs/>}/>
       </Routes>
 
       {showCart && <Cart close={onClose} />}
