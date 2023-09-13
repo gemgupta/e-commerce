@@ -8,6 +8,7 @@ import Footer from "./Components/Footer/Footer";
 import About from "./Components/About/About";
 import { Route, Routes } from "react-router-dom";
 import ContactUs from "./Components/Contact/ContactUs";
+import ProductDes from "./Components/ProductDes/ProductDes";
 
 function App() {
   const [showCart, setshowCart] = useState(false);
@@ -18,30 +19,20 @@ function App() {
     setshowCart(false);
   };
 
-  // const router = createBrowserRouter([
-  //   {
-  //     path: "/home",
-  //     element: <Items />,
-  //   },
-  //   {
-  //     path: "/about",
-  //     element: <About />,
-  //   },
-  // ]);
-
   return (
     <CartProvider>
       <Nav Open={onOpen} />
-      {/* <RouterProvider router={router} /> */}
+
       <Routes>
-        <Route exact path="/" element={<Items/>}/>
-        <Route exact path="/about" element={<About/>}/>
-        <Route exact path="/home" element={<Home/>}/>
-        <Route exact path="/contactUs" element={<ContactUs/>}/>
+        <Route exact path="/" element={<Items />} />
+        <Route exact path="/about" element={<About />} />
+        <Route exact path="/home" element={<Home />} />
+        <Route exact path="/contactUs" element={<ContactUs />} />
+        <Route path="/Product/:id" element={<ProductDes />} />
       </Routes>
 
       {showCart && <Cart close={onClose} />}
-      <Footer/>
+      <Footer />
     </CartProvider>
   );
 }
