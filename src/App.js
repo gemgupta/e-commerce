@@ -10,6 +10,8 @@ import { Route, Routes } from "react-router-dom";
 import ContactUs from "./Components/Contact/ContactUs";
 import ProductDes from "./Components/ProductDes/ProductDes";
 
+import Fetch from "./Components/Authentication/Fetch";
+
 function App() {
   const [showCart, setshowCart] = useState(false);
   const onOpen = () => {
@@ -22,16 +24,17 @@ function App() {
   return (
     <CartProvider>
       <Nav Open={onOpen} />
-
+      {showCart && <Cart close={onClose} />}
       <Routes>
         <Route exact path="/" element={<Items />} />
+        <Route exact path="/Login" element={<Fetch />} />
         <Route exact path="/about" element={<About />} />
         <Route exact path="/home" element={<Home />} />
         <Route exact path="/contactUs" element={<ContactUs />} />
         <Route path="/Product/:id" element={<ProductDes />} />
       </Routes>
 
-      {showCart && <Cart close={onClose} />}
+      
       <Footer />
     </CartProvider>
   );

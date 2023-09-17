@@ -1,7 +1,7 @@
 const productsArr = [
   {
     id: 1,
-    title: "Fjallraven - Foldsack No. 1 Backpack",
+    title: "Fjallraven Backpack",
     price: 100,
     imageUrl: "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
     description:
@@ -11,7 +11,7 @@ const productsArr = [
   {
     id: 2,
 
-    title: "Mens Casual Premium Slim Fit T-Shirts ",
+    title: "Men's Casual Slim Fit T-Shirts ",
     price: 50,
     imageUrl:
       "https://fakestoreapi.com/img/71-3HjGNDUL._AC_SY879._SX._UX._SY._UY_.jpg",

@@ -24,10 +24,10 @@ function ProductDes() {
   return (
     <div
       className="card mb-3 m-auto mt-5 border shadow rounded-2 pt-3"
-      style={{ maxWidth: "540px", height: "30rem" }}
+      style={{ maxWidth: "40rem", }}
     >
       <div className="row g-1">
-        <div className="col-md-4 p-3">
+        <div className="col-md-4 p-3 ">
           <img
             src={product.imageUrl}
             className="img-fluid rounded-start"
@@ -35,8 +35,8 @@ function ProductDes() {
           />
           <button
           onClick={AddItemHandler.bind(null, product)}
-          className="btn btn-warning mt-5 "
-          style={{ width: "7rem", height: "3rem" }}
+          className="btn btn-warning mt-3 d-block m-auto "
+          style={{ width: "10rem", height: "3rem" }}
         >
           Add to Cart
         </button>

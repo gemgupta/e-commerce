@@ -5,15 +5,15 @@ import { Link } from "react-router-dom";
 function ProductsItem(props) {
   const Cartctx = useContext(CartContext);
   const AddItemHandler = (item) => {
-   
-
-    Cartctx.addItem({ ...item, quantity: 1 });
+    if (Cartctx.isLoggedIn) {
+      Cartctx.addItem({ ...item, quantity: 1 });
+    }
   };
   const recievedProducts = props.product;
   return recievedProducts.map((item) => (
     <div
       key={item.id}
-      className=" text-center d-grid gap-1 border shadow rounded-3 p-4"
+      className=" text-center d-grid gap-1 m-1 border shadow rounded-3 p-4"
       style={{ width: "18rem" }}
     >
       <Link className="text-decoration-none" to={`/Product/${item.id} `}>
