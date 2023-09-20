@@ -4,12 +4,14 @@ import Header from "./Header";
 import { useContext } from "react";
 import CartContext from "../Store/CartContext";
 import { Link} from "react-router-dom";
+import AuthContext from "../Store/AuthContext";
 function Nave(props) {
   const Cartctx = useContext(CartContext);
+  const Authctx = useContext(AuthContext);
 
   let quantity = 0;
   Cartctx.item.forEach((item) => {
-    quantity = quantity + Number(item.quantity);
+    quantity = quantity + Number(item.amount);
   });
   return (
     <>
@@ -37,7 +39,7 @@ function Nave(props) {
               Contact
             </Link>
           </Nav>
-          {Cartctx.isLoggedIn && (
+          {Authctx.isLoggedIn && (
             <button
               type="button"
               onClick={props.Open}
@@ -46,12 +48,12 @@ function Nave(props) {
               Cart <span className="badge text-bg-secondary">{quantity}</span>
             </button>
           )}
-          {Cartctx.isLoggedIn && (
-            <button type="button" className="btn btn-danger" onClick={Cartctx.Logout}>
+          {Authctx.isLoggedIn && (
+            <button type="button" className="btn btn-danger" onClick={Authctx.Logout}>
               Logout
             </button>
           )}
-          {!Cartctx.isLoggedIn && (
+          {!Authctx.isLoggedIn && (
             <Link className="btn btn-success" to="/Login">
             Login
           </Link>

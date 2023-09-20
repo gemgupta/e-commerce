@@ -1,14 +1,59 @@
 import React from "react";
-import { useContext } from "react";
+import { useContext} from "react";
 import CartContext from "../Store/CartContext";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import AuthContext from "../Store/AuthContext";
+
 function ProductsItem(props) {
   const Cartctx = useContext(CartContext);
-  const AddItemHandler = (item) => {
-    if (Cartctx.isLoggedIn) {
-      Cartctx.addItem({ ...item, quantity: 1 });
-    }
-  };
+  const Authctx = useContext(AuthContext);
+  const AddItemHandler = async (item) => {
+const userToken= Authctx.Token;
+if(userToken){
+  const itemsToAdd= {
+    id: item.id,
+    imageUrl: item.imageUrl,
+    name: item.title,
+    amount:1,
+    price: item.price
+  }
+  Cartctx.addItem(itemsToAdd)
+  try{
+    const removeemail = Authctx.email.replace(/[.@]/g, "");
+    const response= await axios.post(`https://crudcrud.com/api/b1d3cc6f1ee64267ba2919167c5bf88a/${removeemail}`, itemsToAdd)
+    console.log(response)
+  }catch(error){
+    console.log(error)
+  }
+}
+
+    // Cartctx.addItem({ ...item, quantity: 1 });
+
+    // const removeemail = Cartctx.email.replace(/[.@]/g, "");
+    // console.log(removeemail);
+    // try {
+    //   const response = await fetch(
+    //     `https://e-commerce-9dc0e-default-rtdb.firebaseio.com/${removeemail}.json`,
+    //     {
+    //       method: "POST",
+    //       body: JSON.stringify(item),
+    //       headers: { "Content-Type": "Application/json" },
+    //     }
+    //   );
+    //   if (!response.ok) {
+    //     throw new Error("Something went wrong. POST DATA NOT SUCCESSFUL");
+    //   } else {
+    //     const data = await response.json();
+    //     console.log(data.name);
+    //   }
+    // } catch (error) {
+    //   alert(error.messages);
+    // }
+  }
+
+
+
   const recievedProducts = props.product;
   return recievedProducts.map((item) => (
     <div

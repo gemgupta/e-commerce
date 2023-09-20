@@ -1,11 +1,12 @@
 import React from "react";
 import Login from "./Login";
 import { useContext } from "react";
-import CartContext from "../Store/CartContext";
+
 import { useNavigate } from "react-router-dom";
+import AuthContext from "../Store/AuthContext";
 
 function Fetch() {
-  const ctx = useContext(CartContext);
+  const Authctx = useContext(AuthContext);
   const navigate = useNavigate()
   async function getData(data, signup) {
     if (!signup) {
@@ -21,7 +22,7 @@ function Fetch() {
             }),
             headers: {
               "Content-Type": "application/json",
-            },
+            },  
           }
         );
         if (!response.ok) {
@@ -55,7 +56,7 @@ function Fetch() {
           throw new Error(errorMessage.error.message);
         } else {
           const tokenData = await response.json();
-          ctx.Login(tokenData.idToken);
+          Authctx.Login(tokenData.idToken, tokenData.email);
           console.log("Login success");
           navigate('/')
         }

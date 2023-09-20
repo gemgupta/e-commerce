@@ -27,7 +27,7 @@ function Cart(props) {
           <div className="modal-body py-0">
             {Cartctx.item.map((item) => (
               <section
-                key={item.id}
+                key={item._id}
                 className=" d-flex text-center   row-cols-4"
               >
                 <span className="border-dark d-flex  border-bottom mx-4">
@@ -37,7 +37,7 @@ function Cart(props) {
                     alt=""
                   />
                   <span className=" text-center  d-inline-block w-50 m-auto">
-                    {item.title}
+                    {item.name}
                   </span>
                 </span>
                 <div className="border-dark border-bottom mx-4 d-flex  ">
@@ -48,7 +48,7 @@ function Cart(props) {
                 <span className="border-dark border-bottom mx-4 d-flex">
                   <input
                     className="w-25 h-25 m-auto"
-                    value={item.quantity}
+                    value={item.amount}
                     readOnly
                   />
                   <button
