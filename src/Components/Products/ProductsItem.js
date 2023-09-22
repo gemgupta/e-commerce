@@ -9,8 +9,12 @@ function ProductsItem(props) {
   const Cartctx = useContext(CartContext);
   const Authctx = useContext(AuthContext);
   const AddItemHandler = async (item) => {
-const userToken= Authctx.Token;
-if(userToken){
+
+const itemIndex = Cartctx.item.findIndex((product) => product.id === item.id);
+const existingCartItem = Cartctx.item[itemIndex];
+console.log(!existingCartItem)
+console.log(Cartctx.item)
+if (!existingCartItem) {
   const itemsToAdd= {
     id: item.id,
     imageUrl: item.imageUrl,
@@ -21,11 +25,14 @@ if(userToken){
   Cartctx.addItem(itemsToAdd)
   try{
     const removeemail = Authctx.email.replace(/[.@]/g, "");
-    const response= await axios.post(`https://crudcrud.com/api/b1d3cc6f1ee64267ba2919167c5bf88a/${removeemail}`, itemsToAdd)
-    console.log(response)
+    const response= await axios.post(`https://crudcrud.com/api/1c7b12e2bfde4ff2af994deac138c7cf/${removeemail}`, itemsToAdd)
+    
   }catch(error){
     console.log(error)
   }
+} 
+else{
+ alert('Product already in Cart')
 }
 
     // Cartctx.addItem({ ...item, quantity: 1 });

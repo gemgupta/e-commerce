@@ -4,9 +4,10 @@ import AuthContext from "./AuthContext";
 import { useNavigate } from "react-router";
 function AuthProvider(props) {
   const localToken = localStorage.getItem("token");
+  const localEmail = localStorage.getItem("email");
 
   const [Token, setToken] = useState(localToken);
-  const [userEmail, setUserEmail] = useState("");
+  const [userEmail, setUserEmail] = useState(localEmail);
   const navigate = useNavigate();
 
   const userIsLoggedIn = !!Token;
@@ -14,12 +15,15 @@ function AuthProvider(props) {
   const LoginHandler = (Token, email) => {
     setToken(Token);
     localStorage.setItem("token", Token);
+    localStorage.setItem("email", userEmail);
+
     setUserEmail(email);
   };
   const LogoutHandler = () => {
     setToken(null);
     navigate("/Login");
     localStorage.removeItem("token");
+    localStorage.removeItem("email");
   };
   const AuthContext1 = {
     Token: Token,

@@ -1,10 +1,68 @@
 import React from "react";
-import { useContext } from "react";
+import { useContext, useState, useEffect } from "react";
+import Alert from "react-bootstrap/Alert";
+import axios from "axios";
 import CartContext from "../Store/CartContext";
+import AuthContext from "../Store/AuthContext";
 function Cart(props) {
   const Cartctx = useContext(CartContext);
-  const removehandler = (id) => {
-    Cartctx.removeItem(id);
+
+  const authctx = useContext(AuthContext);
+  const [cartItems, setCartItems] = useState([]);
+  const [showAlert, setShowAlert] = useState(false);
+
+  useEffect(() => {
+    async function fetchCartItems() {
+      const userToken = authctx.Token;
+      if (userToken) {
+        try {
+          const userModifiedEmail = authctx.email.replace(/[.@]/g, "");
+          const URL = `https://crudcrud.com/api/1c7b12e2bfde4ff2af994deac138c7cf`;
+          const response = await axios.get(`${URL}/${userModifiedEmail}`);
+
+          const cart = response.data;
+          const totalAmount = cart.reduce(
+            (total, item) => total + item.price,
+            0
+          );
+          Cartctx.setTotalAmount(totalAmount);
+
+          setCartItems(cart);
+          Cartctx.getlength(cartItems.length);
+        } catch (error) {
+          console.error("Error fetching cart items:", error.response.data);
+        }
+      }
+    }
+
+    fetchCartItems();
+  }, [Cartctx, authctx]);
+  const closeAlertHandler = () => {
+    setShowAlert(false); // Close the alert
+  };
+  const removehandler = async (id) => {
+    const existingItem = cartItems.find((item) => item._id === id);
+
+    if (existingItem) {
+      // Remove from local cart
+      const updatedCart = cartItems.filter((item) => item._id !== id);
+
+      Cartctx.setTotalAmount((totalAmount) => totalAmount - existingItem.price);
+      setCartItems(updatedCart);
+
+      // Remove from remote data
+      try {
+        const userModifiedEmail = authctx.email.replace(/[.@]/g, "");
+        await axios.delete(
+          `https://crudcrud.com/api/1c7b12e2bfde4ff2af994deac138c7cf/${userModifiedEmail}/${id}`
+        );
+      } catch (error) {
+        console.error(
+          "Error deleting item from remote data:",
+          error.response.data
+        );
+      }
+    }
   };
   return (
     <div className="modal d-block " style={{ backgroundColor: "#36363780" }}>
@@ -24,8 +82,13 @@ function Cart(props) {
             <span className="border-dark border-bottom mx-4">Price</span>
             <span className="border-dark border-bottom mx-4">Quantity</span>
           </section>
+          {showAlert && (
+            <Alert variant="warning" onClose={closeAlertHandler} dismissible>
+              Item already in the Cart
+            </Alert>
+          )}
           <div className="modal-body py-0">
-            {Cartctx.item.map((item) => (
+            {cartItems.map((item) => (
               <section
                 key={item._id}
                 className=" d-flex text-center   row-cols-4"
@@ -54,7 +117,7 @@ function Cart(props) {
                   <button
                     className="btn btn-danger d-inline-block w-75 m-auto mx-2 p-0"
                     style={{ height: "2rem" }}
-                    onClick={removehandler.bind(null, item.id)}
+                    onClick={removehandler.bind(null, item._id)}
                   >
                     Remove
                   </button>
@@ -63,7 +126,7 @@ function Cart(props) {
             ))}
 
             <h2 className=" position-relative mt-2 border border-black rounded-4 text-center p-2">
-              Total Cart Value{" "}
+              Total Cart Value
               <span className="text-success"> ${Cartctx.totalAmount} </span>
             </h2>
             <div className="d-flex justify-content-evenly p-3">
